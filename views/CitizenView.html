@@ -94,13 +94,9 @@
               </div>
               <div class="col-lg-6 mb-3">
                 <p style="color: black; text-align: center;">Tipo de Problema</p>
-                <select class="form-control" id="" name="">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </select>
+                <select class="form-control" id="tipoSelect" name="tipoSelect">
+                    <!-- Opções serão preenchidas dinamicamente aqui -->
+                </select>
               </div>
               <div class="col-lg-12 mb-3">
                 <p style="color: black; text-align: center;">Orgão Competente</p>
@@ -230,6 +226,31 @@
     
     </script>
      <script src="../assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="../scripts/apis.js"></script>
+
+    <script>
+      // Função assíncrona para fazer a fetch e preencher o select
+      async function preencherSelect() {
+          try {
+              const response = await fetch('http://localhost:8080/api/cidadao/get-all-tipos');
+              const data = await response.json();
+
+              const select = document.getElementById('tipoSelect');
+              data.forEach(tipo => {
+                  const option = document.createElement('option');
+                  option.value = tipo.id;
+                  option.textContent = tipo.nome;
+                  select.appendChild(option);
+              });
+          } catch (error) {
+              console.error('Erro ao obter tipos:', error);
+          }
+      }
+
+      // Chamar a função para preencher o select quando a página carregar
+      document.addEventListener('DOMContentLoaded', preencherSelect);
+  </script>
 
 </body>
 </html>
