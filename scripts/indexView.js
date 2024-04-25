@@ -81,10 +81,10 @@ const registerView = () => {
   const buttonDiv = criarElemento('div', { class: 'text-center d-grid mt-1' });
   const button = criarBotao('button', 'Cadastrar!', null, 'btn btn-primary rounded-pill pt-3 pb-3');
 
-  col1.appendChild(inputCPF);
+  col1.appendChild(inputEmail);
   col2.appendChild(inputSenha);
   col3.appendChild(inputSenhaRep);
-  col4.appendChild(inputEmail);
+  col4.appendChild(inputCPF);
   buttonDiv.appendChild(button);
 
   form.appendChild(col1);
@@ -149,22 +149,20 @@ const loginView = () => {
   const h4Right = criarElemento('h4', { class: 'display-3--title mb-5' }, 'Login');
   const form = criarElemento('form', { action: '#', class: 'row' });
   const col1 = criarElemento('div', { class: 'col-lg-6 col-md mb-3' });
-  const inputCPF = criarInput('text', 'CPF', null, null, 'shadow form-control form-control-lg');
-  const col2 = criarElemento('div', { class: 'col-lg-6 col-md mb-3' });
-  const inputSenha = criarInput('text', 'Senha', null, null, 'shadow form-control form-control-lg');
-  const col3 = criarElemento('div', { class: 'col-lg-12 mb-3' });
   const inputEmail = criarInput('email', 'Email', null, null, 'shadow form-control form-control-lg');
+  const col2 = criarElemento('div', { class: 'col-lg-6 col-md mb-3' });
+  const space = criarElemento('div', { class: 'col-lg-12 col-md mb-3' });
+  const inputSenha = criarInput('text', 'Senha', null, null, 'shadow form-control form-control-lg');
   const buttonDiv = criarElemento('div', { class: 'text-center d-grid mt-1' });
   const button = criarBotao('button', 'Logar!', null, 'btn btn-primary rounded-pill pt-3 pb-3');
 
-  col1.appendChild(inputCPF);
+  col1.appendChild(inputEmail);
   col2.appendChild(inputSenha);
-  col3.appendChild(inputEmail);
   buttonDiv.appendChild(button);
 
   form.appendChild(col1);
   form.appendChild(col2);
-  form.appendChild(col3);
+  form.appendChild(space);
   form.appendChild(buttonDiv);
   formRight.appendChild(h4Right);
   formRight.appendChild(form);
@@ -182,6 +180,8 @@ const loginView = () => {
   interact.innerHTML = "";
   interact.appendChild(container);
 }
+
+
 
 // window.onload = registerView();
 

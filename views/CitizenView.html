@@ -47,80 +47,8 @@
 
  <br><br><br><br>
 
-<section id="contact" class="get-started">
-    <div class="container">
-      <div class="row text-center">
-        <h1 class="display-3 fw-bold text-capitalize">Denúncia</h1>
-        <div class="heading-line"></div>
-      </div>
-  
-      <!-- START THE CTA CONTENT  -->
-      <div class="row text-white">
-        <div class="col-12 col-lg-6 gradient shadow p-3">
-          <div class="cta-info w-100">
-            <h4 class="display-4 fw-bold">Cadastro de Denúncias</h4>
-            <p class="lh-lg">
-              Cadastre-aqui a sua denúncia e selecione corretamente 
-              o departamento responsável. Além disso, forneça as descrições
-              e imagem.
-            </p>
-            <h3 class="display-3--brief">Qual o próximo passo?</h3>
-            <ul class="cta-info__list">
-              <li>Preencher todos os campos</li>
-              <li>Inserir valores válidos</li>
-              <li>Confirmar envio</li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-12 col-lg-6 bg-white shadow p-3">
-          <div class="form w-100 pb-2">
-            <h4 class="display-3--title mb-5">Insira as Informações</h4>
-            <form action="#" class="row">
-              <div class="col-lg-12 col-md mb-3">
-                <input type="text" placeholder="Título" id="" name="" class="shadow form-control form-control-lg">
-              </div>
-              <div class="col-lg-12 col-md mb-3">
-                <textarea type="textarea" maxlength="" placeholder="Descrição" id="" name="" class="shadow form-control form-control-lg"></textarea>
-              </div>
-              <div class="col-lg-6 col-md mb-3">
-                <p style="color: black; text-align: center;">Urgência</p>
-                <select class="form-control" id="urgenciaSelect" name="urgenciaSelect">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                  </select>
-              </div>
-              <div class="col-lg-6 mb-3">
-                <p style="color: black; text-align: center;">Tipo de Problema</p>
-                <select class="form-control" id="tipoSelect" name="tipoSelect">
-                    <!-- Opções serão preenchidas dinamicamente aqui -->
-                </select>
-              </div>
-              <div class="col-lg-12 mb-3">
-                <p style="color: black; text-align: center;">Orgão Competente</p>
-                <select class="form-control" id="orgaoSelect" name="orgaoSelect">
-                  <!-- Opções serão preenchidas dinamicamente aqui -->
-                  </select>
-              </div>
-              
-              <div class="col-lg-12 mb-3">
-                <p style="color: black; text-align: center;">Insira uma imagem uma imagem</p>
-                <input type="file" placeholder="Imagem" id="" name="" class=" form-control-file form-control">
-              </div>
-              <div class="text-center d-grid mt-1">
-                <button type="button" class="btn btn-primary rounded-pill pt-3 pb-3">
-                  Confirmar!
-                  <i class="fas fa-paper-plane"></i>
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    <section id="denuncia" class="get-started">
+    </section>
 
 
   
@@ -219,7 +147,7 @@
 
     <script src="../assets/vendors/js/glightbox.min.js"></script>
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
-    <script src="../scripts/loadForm.js"></script>
+    <script src="../scripts/denunciaView.js"></script>
     <script src="../scripts/denunciaCtrl.js"></script>
     <script>
       const preencherSelect = async () => {
