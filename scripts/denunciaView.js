@@ -65,7 +65,7 @@ const loadOrgaos = async () => {
 }
 
 const denunciaForm = () => {
-    let denunciaSection = document.querySelector("#denuncia");
+    let denunciaSection = document.querySelector("#interact");
 
     const container = criarElemento('div', { class: 'container' });
     let headBanner = criarElemento('div', { class: 'row text-center'});

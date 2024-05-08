@@ -71,15 +71,15 @@ const registerView = () => {
   const h4Right = criarElemento('h4', { class: 'display-3--title mb-5' }, 'Cadastro');
   const form = criarElemento('form', { action: '#', class: 'row' }, 'Cadastro');
   const col1 = criarElemento('div', { class: 'col-lg-12 col-md mb-3' });
-  const inputCPF = criarInput('text', 'CPF', null, null, 'shadow form-control form-control-lg');
+  const inputCPF = criarInput('text', 'CPF', 'cpfCadastro', 'cpfCadastro', 'shadow form-control form-control-lg');
   const col2 = criarElemento('div', { class: 'col-lg-6 col-md mb-3' });
-  const inputSenha = criarInput('text', 'Senha', null, null, 'shadow form-control form-control-lg');
+  const inputSenha = criarInput('text', 'Senha', 'senhaCadastro', 'senhaCadastro', 'shadow form-control form-control-lg');
   const col3 = criarElemento('div', { class: 'col-lg-6 col-md mb-3' });
-  const inputSenhaRep = criarInput('text', 'Repita a senha', null, null, 'shadow form-control form-control-lg');
+  const inputSenhaRep = criarInput('text', 'Repita a senha', 'senhaRepetida', 'senhaRepetida', 'shadow form-control form-control-lg');
   const col4 = criarElemento('div', { class: 'col-lg-12 mb-3' });
-  const inputEmail = criarInput('email', 'Email', null, null, 'shadow form-control form-control-lg');
+  const inputEmail = criarInput('email', 'Email', 'emailCadastro', 'emailCadastro', 'shadow form-control form-control-lg');
   const buttonDiv = criarElemento('div', { class: 'text-center d-grid mt-1' });
-  const button = criarBotao('button', 'Cadastrar!', null, 'btn btn-primary rounded-pill pt-3 pb-3');
+  const button = criarBotao('submit', 'Cadastrar!', null, 'btn btn-primary rounded-pill pt-3 pb-3');
 
   col1.appendChild(inputEmail);
   col2.appendChild(inputSenha);
@@ -105,6 +105,31 @@ const registerView = () => {
   innerRow.appendChild(rightColumn);
   container.appendChild(innerRow);
 
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const email = document.querySelector('#emailCadastro').value;
+    const senha = document.querySelector('#senhaCadastro').value;
+    const cpf = document.querySelector('#cpfCadastro').value;
+    let usuario = {
+      email: email,
+      senha: senha,
+      cpf: cpf
+    }
+    try {
+      const res = await fetch('http://localhost:8080/access/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(usuario),
+      })
+      const data = await res.json();
+      console.log(data);
+
+    } catch (err) {
+      console.error(err);
+    }
+  })
   interact.innerHTML = "";
   interact.appendChild(container);
 }
@@ -147,14 +172,14 @@ const loginView = () => {
   const rightColumn = criarElemento('div', { class: 'col-12 col-lg-6 bg-white shadow p-3' });
   const formRight = criarElemento('div', { class: 'form w-100 pb-2' });
   const h4Right = criarElemento('h4', { class: 'display-3--title mb-5' }, 'Login');
-  const form = criarElemento('form', { action: '#', class: 'row' });
+  const form = criarElemento('form', { id: 'cadastroForm', action: '#', class: 'row' });
   const col1 = criarElemento('div', { class: 'col-lg-6 col-md mb-3' });
-  const inputEmail = criarInput('email', 'Email', null, null, 'shadow form-control form-control-lg');
+  const inputEmail = criarInput('email', 'Email', 'emailLogin', 'emailLogin', 'shadow form-control form-control-lg');
   const col2 = criarElemento('div', { class: 'col-lg-6 col-md mb-3' });
   const space = criarElemento('div', { class: 'col-lg-12 col-md mb-3' });
-  const inputSenha = criarInput('text', 'Senha', null, null, 'shadow form-control form-control-lg');
+  const inputSenha = criarInput('text', 'Senha', 'senhaLogin', 'senhaLogin', 'shadow form-control form-control-lg');
   const buttonDiv = criarElemento('div', { class: 'text-center d-grid mt-1' });
-  const button = criarBotao('button', 'Logar!', null, 'btn btn-primary rounded-pill pt-3 pb-3');
+  const button = criarBotao('submit', 'Logar!', null, 'btn btn-primary rounded-pill pt-3 pb-3');
 
   col1.appendChild(inputEmail);
   col2.appendChild(inputSenha);
@@ -174,6 +199,30 @@ const loginView = () => {
   buttonRow.appendChild(buttonBack);
   rightColumn.appendChild(buttonRow);
 
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const email = document.querySelector('#emailLogin').value;
+    const senha = document.querySelector('#senhaLogin').value;
+    let usuario = {
+      email: email,
+      senha: senha
+    }
+    try {
+      const res = await fetch('http://localhost:8080/access/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(usuario),
+      })
+      const data = await res.json();
+      console.log(JSON.parse(data));
+
+    } catch (err) {
+      console.error(err);
+    }
+  })
+
   innerRow.appendChild(rightColumn);
   container.appendChild(innerRow);
 
@@ -181,6 +230,9 @@ const loginView = () => {
   interact.appendChild(container);
 }
 
+const cadastrar = async () => {
+  
+}
 
 
 // window.onload = registerView();
