@@ -75,6 +75,11 @@ const loadOrgaos = async () => {
     }).catch (error => console.error('Erro ao obter tipos', error));
 }
 
+const logout = () => {
+    localStorage.removeItem('token');
+    window.location.href = '../index.html';
+}
+
 const denunciaForm = () => {
     let denunciaSection = document.querySelector("#interact");
 
