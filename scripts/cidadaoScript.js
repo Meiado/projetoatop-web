@@ -32,47 +32,80 @@ const criarBotao = (type, text, onclick, classes) => {
 }
 
 const loadTipos = async () => {
-    const token = localStorage.getItem('token');
-    console.log(token);
     await fetch('http://localhost:8080/api/cidadao/tipos', {
         method: 'GET',
         headers: {
-            'Authorization': token,
+            'Authorization': localStorage.getItem('token'),
         },
     })
     .then(response => response.json())
     .then(data => {
-        const select = document.querySelector("#tipoSelect");
-    
+        const select = document.querySelector('#tipoSelect');
         data.forEach(tipo => {
             const option = document.createElement('option');
             option.value = tipo.id;
             option.textContent = tipo.nome;
             select.appendChild(option);
         })
-    }).catch (error => console.error('Erro ao obter tipos', error));
+    })
+    .catch(error => console.error('Erro ao obter tipos', error));
 }
 
 const loadOrgaos = async () => {
-    const token = localStorage.getItem('token');
-    console.log(token);
+    
     await fetch('http://localhost:8080/api/cidadao/orgaos', {
         method: 'GET',
         headers: {
-            'Authorization': token,
+            'Authorization': localStorage.getItem('token'),
         },
     })
     .then(response => response.json())
     .then(data => {
-        const select = document.querySelector("#orgaoSelect");
-    
+        const select = document.querySelector('#orgaoSelect');
         data.forEach(orgao => {
             const option = document.createElement('option');
             option.value = orgao.id;
             option.textContent = orgao.nome;
             select.appendChild(option);
         })
-    }).catch (error => console.error('Erro ao obter tipos', error));
+    })
+    .catch(error => console.error('Erro ao obter tipos', error));
+}
+const sendDenuncia = async () => {
+
+    const token = localStorage.getItem('token');
+    const titulo = document.querySelector('#titulo').value;
+    const texto = document.querySelector('#descricao').value;
+    const urgencia = parseInt(document.querySelector('#urgenciaSelect').value);
+    const idTipo = parseInt(document.querySelector('#tipoSelect').value)
+    const idOrgao = parseInt(document.querySelector('#orgaoSelect').value);
+    const imagem = document.querySelector('input[type=file]').files[0];
+
+    const data = new FormData();
+    data.append('titulo', titulo);
+    data.append('texto', texto);
+    data.append('urgencia', urgencia);
+    data.append('idTipo', idTipo);
+    data.append('idOrgao', idOrgao);
+    if(imagem)
+        data.append('imagem', imagem);
+
+    await fetch('http://localhost:8080/api/cidadao/denuncia', {
+        method: 'POST',
+        headers: {
+            'Authorization': token,
+        },
+        body: data,
+    }).then(response => {
+        if(response.ok) {
+            alert('Denúncia enviada!');
+            denunciaForm();
+        }
+        else
+            console.error('Falha no envio: '+ response.status);
+    }).catch(error => {
+        console.error('Erro ao enviar denúncia: ', error);
+    });
 }
 
 const logout = () => {
@@ -82,6 +115,7 @@ const logout = () => {
 
 const denunciaForm = () => {
     let denunciaSection = document.querySelector("#interact");
+    denunciaSection.innerHTML = '';
 
     const container = criarElemento('div', { class: 'container' });
     let headBanner = criarElemento('div', { class: 'row text-center'});
@@ -114,7 +148,7 @@ const denunciaForm = () => {
     const painelDir = criarElemento('div', { class: 'col-12 col-lg-6 bg-white shadow p-3' });
     const divForm = criarElemento('div', { class: 'form w-100 pb-2' });
     const formHead = criarElemento('h4', { class: 'display-3--title mb-5' }, 'Insira as informações');
-    const form = criarElemento('form', { class: 'row', action: '#' });
+    const form = criarElemento('form', { class: 'row', action: '#', id: 'denunciaForm' });
     divForm.appendChild(formHead);
     divForm.appendChild(form);
 
@@ -164,10 +198,15 @@ const denunciaForm = () => {
     form.appendChild(divImg);
 
     const divBut = criarElemento('div', { class: 'text-center d-grid mt-1'});
-    let button = criarBotao('button', '', '#', 'btn btn-primary rounded-pill pt-3 pb-3');
+    let button = criarBotao('submit', '', '#', 'btn btn-primary rounded-pill pt-3 pb-3');
     button.innerHTML = 'Confirmar <i class="fas fa-paper-plane"></i>'
     divBut.appendChild(button);
     form.appendChild(divBut);
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        await sendDenuncia();
+    });
 
     painelDir.appendChild(divForm);
     
@@ -179,4 +218,18 @@ const denunciaForm = () => {
 
 }
 
-window.onload = denunciaForm();
+window.onload = async () => {
+    await fetch('http://localhost:8080/access/session', {
+        method: 'GET',
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        }
+    }).then(response => {
+        if(response.status === 200)
+            denunciaForm();
+        else {
+            alert("Inicie a sessão para continuar!");
+            window.location.href = "../index.html";
+        }
+    });
+} 

@@ -126,7 +126,21 @@ const registerView = () => {
       const token = await loginResponse.text();
       console.log(token);
   
-      localStorage.setItem('access-token', token);
+      localStorage.setItem('token', token);
+
+      const accessResponse = await fetch('http://localhost:8080/access?token=' + token, {
+        method: 'GET',
+      })
+      const access = parseInt(await accessResponse.text()); 
+      if(access === 1) {
+        window.location.href = './views/AdminView.html';
+      } else if (access === 2) {
+        window.location.href = './views/CidadaoView.html';
+      } else {
+        localStorage.removeItem('access-token');
+        alert('Houve um erro com seu nível de acesso. Status: inválido!');
+      }
+
     } catch (err) {
       console.error(err);
     }
@@ -217,15 +231,13 @@ const loginView = () => {
         body: JSON.stringify(usuario),
       })
       const token = await res.text();
-      console.log(token);
+      localStorage.setItem('token', token);
 
       const accessResponse = await fetch('http://localhost:8080/access?token=' + token, {
         method: 'GET',
       })
       const access = parseInt(await accessResponse.text()); 
       console.log(access);
-
-      localStorage.setItem('token', token);
 
       // const base64Url = token.split('.')[1];
       // const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
