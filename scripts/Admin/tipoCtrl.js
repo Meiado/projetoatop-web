@@ -6,13 +6,16 @@ const loadTipos = async () => {
     const tableHead = document.createElement('thead');
     tableHead.innerHTML = `
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Tipo do Problema</th>
+          <th scope="col">ID</th>
+          <th scope="col">Tipos de Problemas</th>
           <th scope="col"></th>
           <th scope="col"></th>
         </tr>
     `;
+    tableHead.setAttribute('style', 'border-top-color: aliceblue;');
     const tableBody = document.createElement('tbody');
+    tableBody.setAttribute('class', 'table-group-divider');
+    tableBody.setAttribute('style', 'border-top-color: aliceblue;');
     const response = await fetch('http://localhost:8080/api/admin/tipo/all', {
         method: 'GET',
         headers: {
@@ -26,20 +29,27 @@ const loadTipos = async () => {
             <tr>
                 <td>${tipo.id}</td>
                 <td id="${tipo.id}">${tipo.nome}</td>
-                <td><button onclick="montaTipoForm(${tipo.id})">Alterar</td>
-                <td><button onclick="deleteTipo(${tipo.id})">Excluir</td>
+                <td><button class="btn btn-primary rounded-pill pt-1 pb-1" onclick="montaTipoForm(${tipo.id})">Alterar</td>
+                <td><button class="btn btn-danger rounded-pill pt-1 pb-1" onclick="deleteTipo(${tipo.id})">Excluir</td>
             </tr>
         `;
         tipos += itemTipo;
     };
     tableBody.innerHTML = tipos;
-    const tableFoot = document.createElement('tfoot');
-    const novo = criarBotao('button', 'Adicionar novo');
-    novo.addEventListener('click', () => montaTipoForm());
-    tableFoot.appendChild(novo);
     table.appendChild(tableHead);
     table.appendChild(tableBody);
-    table.appendChild(tableFoot);
+
+    
+    const divButton = criarElemento('div', {class: 'container', style: 'display: flex; justify-content: center; gap: 3px;'});
+    const novo = criarBotao('button', 'Adicionar novo', '#', 'btn btn-primary rounded-pill pt-2 pb-2');
+    novo.addEventListener('click', () => montaTipoForm());
+    novo.setAttribute('style', 'margin-top: 5px');
+    const voltar = criarBotao('button', 'Voltar', '#', 'btn btn-primary rounded-pill pt-2 pb-2');
+    voltar.addEventListener('click', () => window.location.reload());
+    voltar.setAttribute('style', 'margin-top: 5px');
+    divButton.appendChild(novo);
+    divButton.appendChild(voltar);
+    document.querySelector('#buttonSection').appendChild(divButton);
 }
 
 const deleteTipo = async (id) => {
@@ -61,13 +71,18 @@ const montaTipoForm = async (id) => {
     const formSection = document.querySelector('#formSection');
     formSection.innerHTML = '';
     const form = criarElemento('form',{ id: 'tipoForm' });
-    const input = criarInput('text', 'Nome', 'tipoNome');
-    const button = criarBotao('submit', 'Enviar');
+    const div = criarElemento('div', { class: 'input-group mb-3', style: 'display: flex; justify-content: center;' });
+    const span = criarElemento('span', { class: 'input-group-text', id: 'inputGroup-sizing-default' }, 'Nome');
+    const input = criarInput('text', '', 'tipoNome');
+    div.appendChild(span);
+    div.appendChild(input);
+    const button = criarBotao('submit', 'Enviar','#', 'btn btn-primary rounded-pill pt-1 pb-1');
+    button.setAttribute('style', 'margin-left: 5px');
     if(id) {
         input.value = listaTipos.find(tipo => tipo.id === id).nome;
     }
-    form.appendChild(input);
-    form.appendChild(button);
+    div.appendChild(button);
+    form.appendChild(div);
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
         await enviaTipo(id);
@@ -119,21 +134,7 @@ const enviaTipo = async (id) => {
 
 const tipoControl = async () => {
     document.querySelector('#formSection').innerHTML='';
+    document.querySelector('#buttonSection').innerHTML = '';
     await loadTipos();
-}
 
-const validaSessaoAdmin = async () => {
-    await fetch('http://localhost:8080/access/session', {
-        method: 'GET',
-        headers: {
-            'Authorization': localStorage.getItem('token'),
-        }
-    }).then(response => {
-        if(response.ok && parseInt(localStorage.getItem('access')) === 1) 
-            tipoControl();
-        else {
-            alert("Entre como administrador para continuar!");
-            window.location.href = "../index.html";
-        }
-    });
-} 
+}

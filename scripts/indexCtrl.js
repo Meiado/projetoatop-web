@@ -26,21 +26,41 @@ const register = async () => {
         })
         const access = parseInt(await accessResponse.text());
         localStorage.setItem('access', access); 
-        if(access === 1) {
-          window.location.href = './views/AdminView.html';
-        } else if (access === 2) {  
-          window.location.href = './views/CidadaoView.html';
-        } else {
-          localStorage.removeItem('access-token');
-          localStorage.removeItem('access');
-          alert('Houve um erro com seu nível de acesso. Status: inválido!');
-        }
+        redirect(access);
   
       } catch (err) {
         console.error(err);
       }
   }
-  
+
+const verificaSessao = () => {
+  const botao = document.querySelector('#botaoDinamico');
+  const token = localStorage.getItem('token');
+  const access = localStorage.getItem('access');
+  if(token && access) {
+      botao.innerHTML = 'Minha página<span><i class="fas fa-home"></i></span>';
+      botao.addEventListener('click', () => redirect(parseInt(access)));
+  }
+  else {
+    if(access)
+      localStorage.removeItem('access');
+    botao.innerHTML = 'Login<span><i class="fas fa-home"></i></span>';
+    botao.addEventListener('click', () => loginView());
+  }
+}
+
+const redirect = (access) => {
+  if(access === 1) {
+    window.location.href = './views/AdminView.html';
+  } else if (access === 2) {  
+    window.location.href = './views/CidadaoView.html';
+  } else {
+    localStorage.removeItem('access-token');
+    localStorage.removeItem('access');
+    alert('Houve um erro com seu nível de acesso. Status: inválido!');
+  }
+}
+
 const login = async () => {
     const email = document.querySelector('#emailLogin').value;
     const senha = document.querySelector('#senhaLogin').value;
@@ -61,17 +81,11 @@ const login = async () => {
         })
         const access = parseInt(await accessResponse.text());
         localStorage.setItem('access', access); 
-        if(access === 1) {
-          window.location.href = './views/AdminView.html';
-        } else if (access === 2) {  
-          window.location.href = './views/CidadaoView.html';
-        } else {
-          localStorage.removeItem('access-token');
-          localStorage.removeItem('access');
-          alert('Houve um erro com seu nível de acesso. Status: inválido!');
-        }
+        redirect(access);
 
     } catch (err) {
         console.error(err);
     }
 }
+
+window.onload = verificaSessao();
