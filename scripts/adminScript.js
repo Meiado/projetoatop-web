@@ -1,3 +1,8 @@
+const logout = () => {
+    localStorage.removeItem('token');
+    window.location.href = '../index.html';
+}
+
 window.onload = async () => {
     await fetch('http://localhost:8080/access/session', {
         method: 'GET',
@@ -5,8 +10,8 @@ window.onload = async () => {
             'Authorization': localStorage.getItem('token'),
         }
     }).then(response => {
-        if(response.status === 200) {}
-            //carrega pagina
+        if(response.status === 200) 
+            tipoControl();
         else {
             alert("Inicie a sessão para continuar!");
             window.location.href = "../index.html";
