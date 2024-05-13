@@ -1,3 +1,4 @@
+
 const loadTipos = async () => {
     await fetch('http://localhost:8080/api/cidadao/tipos', {
         method: 'GET',
@@ -83,9 +84,11 @@ const validaSessaoCidadao = async () => {
         }
     }).then(response => {
         if(response.ok && parseInt(localStorage.getItem('access')) === 2)
-            denunciaForm();
+            cidadaoHome();
         else {
             alert("Entre como cidadão para continuar!");
+            localStorage.removeItem('access');
+            localStorage.removeItem('token');
             window.location.href = "../index.html";
         }
     });

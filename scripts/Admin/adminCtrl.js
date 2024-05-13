@@ -10,6 +10,8 @@ const validaSessaoAdmin = async () => {
             adminHome();
         else {
             alert("Entre como administrador para continuar!");
+            localStorage.removeItem('access');
+            localStorage.removeItem('token');
             window.location.href = "../index.html";
         }
     });
