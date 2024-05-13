@@ -1,4 +1,3 @@
-
 const register = async () => {
     const email = document.querySelector('#emailCadastro').value;
       const senha = document.querySelector('#senhaCadastro').value;
@@ -40,12 +39,19 @@ const verificaSessao = () => {
   if(token && access) {
       botao.innerHTML = 'Minha página<span><i class="fas fa-home"></i></span>';
       botao.addEventListener('click', () => redirect(parseInt(access)));
+      document.querySelector('#botaoCadastro').innerHTML = '';
   }
   else {
     if(access)
       localStorage.removeItem('access');
     botao.innerHTML = 'Login<span><i class="fas fa-home"></i></span>';
     botao.addEventListener('click', () => loginView());
+    document.querySelector('#botaoCadastro').innerHTML = `
+      <button type="button" onclick="registerView()" class="rounded-pill btn-rounded">
+        Cadastre-se
+        <span><i class="fas fa-arrow-right"></i></span>
+      </button>
+    `;
   }
 }
 
@@ -55,9 +61,9 @@ const redirect = (access) => {
   } else if (access === 2) {  
     window.location.href = './views/CidadaoView.html';
   } else {
-    localStorage.removeItem('access-token');
+    localStorage.removeItem('token');
     localStorage.removeItem('access');
-    alert('Houve um erro com seu nível de acesso. Status: inválido!');
+    alert('Houve um erro com seu nível de acesso. Status: inválido');
   }
 }
 
