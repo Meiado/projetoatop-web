@@ -5,7 +5,7 @@ const denunciaForm = () => {
     const container = criarElemento('div', { class: 'container' });
     let headBanner = criarElemento('div', { class: 'row text-center'});
     headBanner.innerHTML = `
-        <h1 class="display-3 fw-bold text-capitalize">Denúncia</h1>
+        <h1 class="display-3 fw-bold text-capitalize" style="color: white;">Denúncia</h1>
         <div class="heading-line"></div>
         `;
     container.appendChild(headBanner);
@@ -82,10 +82,15 @@ const denunciaForm = () => {
     divImg.appendChild(inputImg);
     form.appendChild(divImg);
 
-    const divBut = criarElemento('div', { class: 'text-center d-grid mt-1'});
-    let button = criarBotao('submit', '', '#', 'btn btn-primary rounded-pill pt-3 pb-3');
+    const divBut = criarElemento('div', { class: 'text-center d-grid mt-1', style: 'display: flex; flex-direction: column; justify-content: center;'});
+    const button = criarBotao('submit', '', '#', 'btn btn-primary rounded-pill pt-2 pb-2');
     button.innerHTML = 'Confirmar <i class="fas fa-paper-plane"></i>'
+    button.setAttribute('style', 'margin-top: 5px; width: 100%;');
+    const cancelar = criarBotao('button', 'Cancelar', '#', 'btn btn-danger rounded-pill pt-2 pb-2');
+    cancelar.addEventListener('click', () => window.location.reload());
+    cancelar.setAttribute('style', 'margin-top: 5px; max-width: 150px;');
     divBut.appendChild(button);
+    divBut.appendChild(cancelar);
     form.appendChild(divBut);
 
     form.addEventListener('submit', async (event) => {
@@ -98,8 +103,37 @@ const denunciaForm = () => {
     painelPrincipal.appendChild(painelEsq);
     painelPrincipal.appendChild(painelDir);
     container.appendChild(painelPrincipal);
-
     denunciaSection.appendChild(container);
-
+    preencherSelect();
 }
+
+
+const preencherSelect = async () => {
+    loadTipos();
+    loadOrgaos();
+}
+
+const cidadaoHome = () => {
+    const home = document.querySelector('#interact');
+    home.innerHTML = `<div class="row align-items-center text-white">
+        <!-- START THE CONTENT FOR THE INTRO  -->
+        <div class="col-md-6 intros text-start">
+        <h1 class="display-2">
+            <span class="display-2--intro">Bem-vindo, cidadão.</span>
+            <span class="display-2--description lh-base">
+            Ao lado estão as funcionalidades disponíveis. 
+            </span>
+        </h1>
+        </div>
+        <!-- START THE CONTENT FOR THE VIDEO -->
+        <div id="funcionalidades" class="col-md-6 intros text-end">
+        <div class="list-group" style="gap: 3px; text-align: center;">
+            <a class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="denunciaForm()">Enviar denúncia</a>
+            <a class="list-group-item list-group-item-action disabled" aria-disabled="true">Visualizar minhas denúncias</a>
+        </div>
+        </div>
+  </div>
+  `;
+}
+
 window.onload = async () => validaSessaoCidadao();
