@@ -107,43 +107,7 @@ const registerView = () => {
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const email = document.querySelector('#emailCadastro').value;
-    const senha = document.querySelector('#senhaCadastro').value;
-    const cpf = document.querySelector('#cpfCadastro').value;
-    let usuario = {
-      email: email,
-      senha: senha,
-      cpf: cpf
-    }
-    try {
-      const loginResponse = await fetch('http://localhost:8080/access/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(usuario),
-      })
-      const token = await loginResponse.text();
-      console.log(token);
-  
-      localStorage.setItem('token', token);
-
-      const accessResponse = await fetch('http://localhost:8080/access?token=' + token, {
-        method: 'GET',
-      })
-      const access = parseInt(await accessResponse.text()); 
-      if(access === 1) {
-        window.location.href = './views/AdminView.html';
-      } else if (access === 2) {
-        window.location.href = './views/CidadaoView.html';
-      } else {
-        localStorage.removeItem('access-token');
-        alert('Houve um erro com seu nível de acesso. Status: inválido!');
-      }
-
-    } catch (err) {
-      console.error(err);
-    }
+    await register();
   })
   interact.innerHTML = "";
   interact.appendChild(container);
@@ -216,48 +180,7 @@ const loginView = () => {
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const email = document.querySelector('#emailLogin').value;
-    const senha = document.querySelector('#senhaLogin').value;
-    let usuario = {
-      email: email,
-      senha: senha
-    }
-    try {
-      const res = await fetch('http://localhost:8080/access/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(usuario),
-      })
-      const token = await res.text();
-      localStorage.setItem('token', token);
-
-      const accessResponse = await fetch('http://localhost:8080/access?token=' + token, {
-        method: 'GET',
-      })
-      const access = parseInt(await accessResponse.text()); 
-      console.log(access);
-
-      // const base64Url = token.split('.')[1];
-      // const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      // const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-      //     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      // }).join(''));
-      // const access = JSON.parse(jsonPayload).nivel;
-
-      if(access === 1) {
-        window.location.href = './views/AdminView.html';
-      } else if (access === 2) {
-        window.location.href = './views/CidadaoView.html';
-      } else {
-        localStorage.removeItem('access-token');
-        alert('Houve um erro com seu nível de acesso. Status: inválido!');
-      }
-
-    } catch (err) {
-      console.error(err);
-    }
+    await login();
   })
 
   innerRow.appendChild(rightColumn);
@@ -267,122 +190,8 @@ const loginView = () => {
   interact.appendChild(container);
 }
 
-
-// window.onload = registerView();
-
-// const registerView = () => {
-//   let interact = document.querySelector("#interact");
-//   interact.innerHTML = ` <div class="container">
-//   <div class="row text-center">
-//     <h1 class="display-3 fw-bold text-capitalize">Cadastre-se</h1>
-//     <div class="heading-line"></div>
-//   </div>
-
-
-//   <div class="row text-white">
-//     <div class="col-12 col-lg-6 gradient shadow p-3">
-//       <div class="cta-info w-100">
-//         <h4 class="display-4 fw-bold">100% de Segurança de Dados</h4>
-//         <p class="lh-lg">
-//           Cadastre-se agora em nossa plataforma para realizar as denúncias em 
-//           sua região! Fique tranquilo, seus dados estarão seguros e anônimos.
-//         </p>
-//         <h3 class="display-3--brief">Qual o próximo passo?</h3>
-//         <ul class="cta-info__list">
-//           <li>Fazer o cadastro.</li>
-//           <li>Logar na tela abaixo.</li>
-//           <li>Cadastrar suas denúncias.</li>
-//         </ul>
-//       </div>
-//     </div>
-//     <div class="col-12 col-lg-6 bg-white shadow p-3">
-//       <div class="form w-100 pb-2">
-//         <h4 class="display-3--title mb-5">Cadastro</h4>
-//         <form action="#" class="row">
-//           <div class="col-lg-12 col-md mb-3">
-//             <input type="text" placeholder="CPF" id="" name="" class="shadow form-control form-control-lg">
-//           </div>
-//           <div class="col-lg-6 col-md mb-3">
-//             <input type="text" placeholder="Senha" id="" name="" class="shadow form-control form-control-lg">
-//           </div>
-//           <div class="col-lg-6 col-md mb-3">
-//               <input type="text" placeholder="Repita a senha" id="" name="" class="shadow form-control form-control-lg">
-//             </div>
-//           <div class="col-lg-12 mb-3">
-//             <input type="email" placeholder="Email" id="" name="" class="shadow form-control form-control-lg">
-//           </div>
-//           <div class="text-center d-grid mt-1">
-//             <button type="button" class="btn btn-primary rounded-pill pt-3 pb-3">
-//               Cadastrar!
-//               <i class="fas fa-paper-plane"></i>
-//             </button>
-//           </div>
-//         </form>
-//       </div>
-//       <div class="text-center d-grid mt-3">
-//         <button type="button" onclick="loginView()" class="btn btn-primary rounded-pill pt-3 pb-3" style="max-width: 50%;  margin: 0 auto;">
-//           Já cadastrado? Clique aqui
-//         </button>
-//       </div>
-      
-//     </div>
-//   </div>
-// </div>`;
-// }
-
-
-// const loginView = () => {
-//     let interact = document.querySelector("#interact");
-//     interact.innerHTML = `<div class="container">
-//     <div class="row text-center">
-//       <h1 class="display-3 fw-bold text-capitalize">Acesse</h1>
-//       <div class="heading-line"></div>
-//     </div>
-
-//     <!-- START THE CTA CONTENT  -->
-//     <div class="row text-white">
-//       <div class="col-12 col-lg-6 gradient shadow p-3">
-//         <div class="cta-info w-100">
-//           <h4 class="display-4 fw-bold">Portal de Denúncias</h4>
-//           <p class="lh-lg">
-//             Faça o Login para acessar a página de denúncias e reportar os
-//             casos que merecem atenção!
-//           </p>
-//           <h3 class="display-3--brief">Qual o próximo passo?</h3>
-//           <ul class="cta-info__list">
-//             <li>Login.</li>
-//             <li>Redirecionamento para a página.</li>
-//             <li>Cadastrar suas denúncias.</li>
-//           </ul>
-//         </div>
-//       </div>
-//       <div class="col-12 col-lg-6 bg-white shadow p-3">
-//         <div class="form w-100 pb-2">
-//           <h4 class="display-3--title mb-5">Login</h4>
-//           <form action="#" class="row">
-//             <div class="col-lg-6 col-md mb-3">
-//               <input type="text" placeholder="CPF" id="" name="" class="shadow form-control form-control-lg">
-//             </div>
-//             <div class="col-lg-6 col-md mb-3">
-//               <input type="text" placeholder="Senha" id="" name="" class="shadow form-control form-control-lg">
-//             </div>
-//             <div class="col-lg-12 mb-3">
-//               <input type="email" placeholder="Email" id="" name="" class="shadow form-control form-control-lg">
-//             </div>
-//             <div class="text-center d-grid mt-1">
-//               <button type="button" class="btn btn-primary rounded-pill pt-3 pb-3">
-//                 Logar!
-//                 <i class="fas fa-paper-plane"></i>
-//               </button>
-//             </div>
-//           </form>
-//         </div>
-//         <div class="text-center d-grid mt-3">
-//           <button type="button" onclick="registerView()" class="btn btn-primary rounded-pill pt-3 pb-3" style="max-width: 50%;  margin: 0 auto;">
-//             Não possui cadastro? Clique aqui
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   </div>` ;
-// }
+const logout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('access');
+  window.location.href = '../index.html';
+}
