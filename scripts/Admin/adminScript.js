@@ -18,7 +18,7 @@ const adminHome = () => {
         <div id="funcionalidades" class="col-md-6 intros text-end">
         <div class="list-group" style="gap: 3px; text-align: center;">
             <a class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="gerenciarTipos()">Gerenciar Tipos</a>
-            <a class="list-group-item list-group-item-action disabled" aria-disabled="true">Gerenciar Órgãos Públicos</a>
+            <a class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="gerenciarOrgao()">Gerenciar Órgãos Públicos</a>
             <a class="list-group-item list-group-item-action disabled " aria-disabled="true">Visualizar Denúncias</a>
             <a class="list-group-item list-group-item-action disabled" aria-disabled="true" href="#visualizarDenuncias">Cadastrar administrador</a>
         </div>
@@ -42,4 +42,9 @@ const preparaTabela = () => {
 const gerenciarTipos = async () => {
     preparaTabela();
     await tipoControl();
+}
+
+const gerenciarOrgao = async () => {
+    preparaTabela();
+    await orgaoControl();
 }
