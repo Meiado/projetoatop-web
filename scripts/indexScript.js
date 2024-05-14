@@ -72,10 +72,12 @@ const registerView = () => {
   const form = criarElemento('form', { action: '#', class: 'row' }, 'Cadastro');
   const col1 = criarElemento('div', { class: 'col-lg-12 col-md mb-3' });
   const inputCPF = criarInput('text', 'CPF', 'cpfCadastro', 'cpfCadastro', 'shadow form-control form-control-lg');
+  inputCPF.setAttribute('onkeyup', 'cpf()');
+  inputCPF.setAttribute('maxlength', '14');
   const col2 = criarElemento('div', { class: 'col-lg-6 col-md mb-3' });
-  const inputSenha = criarInput('text', 'Senha', 'senhaCadastro', 'senhaCadastro', 'shadow form-control form-control-lg');
+  const inputSenha = criarInput('password', 'Senha', 'senhaCadastro', 'senhaCadastro', 'shadow form-control form-control-lg');
   const col3 = criarElemento('div', { class: 'col-lg-6 col-md mb-3' });
-  const inputSenhaRep = criarInput('text', 'Repita a senha', 'senhaRepetida', 'senhaRepetida', 'shadow form-control form-control-lg');
+  const inputSenhaRep = criarInput('password', 'Repita a senha', 'senhaRepetida', 'senhaRepetida', 'shadow form-control form-control-lg');
   const col4 = criarElemento('div', { class: 'col-lg-12 mb-3' });
   const inputEmail = criarInput('email', 'Email', 'emailCadastro', 'emailCadastro', 'shadow form-control form-control-lg');
   const buttonDiv = criarElemento('div', { class: 'text-center d-grid mt-1' });
@@ -91,6 +93,8 @@ const registerView = () => {
   form.appendChild(col2);
   form.appendChild(col3);
   form.appendChild(col4);
+  const par = criarElemento('p', { class: 'mensagem-denuncia', id: 'mensagem' });
+  form.appendChild(par);
   form.appendChild(buttonDiv);
   formRight.appendChild(h4Right);
   formRight.appendChild(form);
@@ -111,6 +115,7 @@ const registerView = () => {
   })
   interact.innerHTML = "";
   interact.appendChild(container);
+  
 }
 
 const loginView = () => {
@@ -156,7 +161,7 @@ const loginView = () => {
   const inputEmail = criarInput('email', 'Email', 'emailLogin', 'emailLogin', 'shadow form-control form-control-lg');
   const col2 = criarElemento('div', { class: 'col-lg-6 col-md mb-3' });
   const space = criarElemento('div', { class: 'col-lg-12 col-md mb-3' });
-  const inputSenha = criarInput('text', 'Senha', 'senhaLogin', 'senhaLogin', 'shadow form-control form-control-lg');
+  const inputSenha = criarInput('password', 'Senha', 'senhaLogin', 'senhaLogin', 'shadow form-control form-control-lg');
   const buttonDiv = criarElemento('div', { class: 'text-center d-grid mt-1' });
   const button = criarBotao('submit', 'Logar!', null, 'btn btn-primary rounded-pill pt-3 pb-3');
 
@@ -167,6 +172,8 @@ const loginView = () => {
   form.appendChild(col1);
   form.appendChild(col2);
   form.appendChild(space);
+  const par = criarElemento('p', { class: 'mensagem', id: 'mensagem' });
+  form.appendChild(par);
   form.appendChild(buttonDiv);
   formRight.appendChild(h4Right);
   formRight.appendChild(form);
@@ -194,4 +201,18 @@ const logout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('access');
   window.location.href = '../index.html';
+}
+
+const cpf = () => {
+  const cpf = document.getElementById('cpfCadastro');
+  cpf.value = mascaracpf(cpf.value);
+}
+
+const mascaracpf = (v) => {
+  v=v.replace(/\D/g,"")                    //Remove tudo o que não é dígito
+  v=v.replace(/(\d{3})(\d)/,"$1.$2")       //Coloca um ponto entre o terceiro e o quarto dígitos
+  v=v.replace(/(\d{3})(\d)/,"$1.$2")       //Coloca um ponto entre o terceiro e o quarto dígitos
+                                           //de novo (para o segundo bloco de números)
+  v=v.replace(/(\d{3})(\d{1,2})$/,"$1-$2") //Coloca um hífen entre o terceiro e o quarto dígitos
+  return v
 }

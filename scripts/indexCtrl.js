@@ -1,5 +1,6 @@
 const register = async () => {
     const email = document.querySelector('#emailCadastro').value;
+    if(IsEmail(email)) {
       const senha = document.querySelector('#senhaCadastro').value;
       const cpf = document.querySelector('#cpfCadastro').value;
       let usuario = {
@@ -19,18 +20,21 @@ const register = async () => {
         console.log(token);
     
         localStorage.setItem('token', token);
-  
+
         const accessResponse = await fetch('http://localhost:8080/access?token=' + token, {
           method: 'GET',
         })
         const access = parseInt(await accessResponse.text());
         localStorage.setItem('access', access); 
         redirect(access);
-  
+
       } catch (err) {
         console.error(err);
       }
   }
+  else 
+    document.querySelector('#mensagem').innerHTML = 'Favor inserir um email com formato válido';
+}
 
 const verificaSessao = () => {
   const botao = document.querySelector('#botaoDinamico');
@@ -69,29 +73,33 @@ const redirect = (access) => {
 
 const login = async () => {
     const email = document.querySelector('#emailLogin').value;
-    const senha = document.querySelector('#senhaLogin').value;
-    let usuario = { email: email, senha: senha };
-    try {
-        const res = await fetch('http://localhost:8080/access/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(usuario),
-        })
-        const token = await res.text();
-        localStorage.setItem('token', token);
+    if(IsEmail(email)) {
+      const senha = document.querySelector('#senhaLogin').value;
+      let usuario = { email: email, senha: senha };
+      try {
+          const res = await fetch('http://localhost:8080/access/login', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(usuario),
+          })
+          const token = await res.text();
+          localStorage.setItem('token', token);
 
-        const accessResponse = await fetch('http://localhost:8080/access?token=' + token, {
-        method: 'GET',
-        })
-        const access = parseInt(await accessResponse.text());
-        localStorage.setItem('access', access); 
-        redirect(access);
+          const accessResponse = await fetch('http://localhost:8080/access?token=' + token, {
+          method: 'GET',
+          })
+          const access = parseInt(await accessResponse.text());
+          localStorage.setItem('access', access); 
+          redirect(access);
 
-    } catch (err) {
-        console.error(err);
+      } catch (err) {
+          console.error(err);
+      }
     }
+    else
+      document.querySelector('#mensagem').innerHTML = 'Favor inserir um email com formato válido';
 }
 
 window.onload = verificaSessao();
