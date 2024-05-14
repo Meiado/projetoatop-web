@@ -1,4 +1,4 @@
-const denunciaForm = () => {
+const denunciaForm = (data) => {
     let denunciaSection = document.querySelector("#interact");
     denunciaSection.innerHTML = '';
 
@@ -83,28 +83,38 @@ const denunciaForm = () => {
     form.appendChild(divImg);
 
     const divBut = criarElemento('div', { class: 'text-center d-grid mt-1', style: 'display: flex; flex-direction: column; justify-content: center;'});
-    const button = criarBotao('submit', '', '#', 'btn btn-primary rounded-pill pt-2 pb-2');
-    button.innerHTML = 'Confirmar <i class="fas fa-paper-plane"></i>'
+    const button = criarBotao('button', '', '#', 'btn btn-primary rounded-pill pt-2 pb-2');
+    button.innerHTML = 'Enviar <i class="fas fa-paper-plane"></i>'
     button.setAttribute('style', 'margin-top: 5px; width: 100%;');
-    const cancelar = criarBotao('button', 'Cancelar', '#', 'btn btn-danger rounded-pill pt-2 pb-2');
-    cancelar.addEventListener('click', () => window.location.reload());
-    cancelar.setAttribute('style', 'margin-top: 5px; max-width: 150px;');
+    button.setAttribute('id', 'botao1');
+    button.addEventListener('click',() => sendDenuncia());
+    const voltar = criarBotao('button', 'Voltar', '#', 'btn btn-secondary rounded-pill pt-2 pb-2');
+    voltar.setAttribute('style', 'margin-top: 5px; max-width: 150px;');
+    voltar.setAttribute('id', 'botao2');
+    voltar.addEventListener('click', () => cidadaoHome());
     divBut.appendChild(button);
-    divBut.appendChild(cancelar);
+    divBut.appendChild(voltar);
+    const par = criarElemento('p', { class: 'mensagem-denuncia', id: 'mensagem' });
+    form.appendChild(par);
     form.appendChild(divBut);
-
-    form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        await sendDenuncia();
-    });
-
     painelDir.appendChild(divForm);
-    
+
     painelPrincipal.appendChild(painelEsq);
     painelPrincipal.appendChild(painelDir);
     container.appendChild(painelPrincipal);
     denunciaSection.appendChild(container);
     preencherSelect();
+
+    if(data) {
+        inputTitle.value = data.get('titulo');
+        inputText.value = data.get('texto');
+        if(data.getAll('imagem')[0]) {
+            const imagem = data.getAll('imagem')[0];
+            const fileList = new DataTransfer();
+            fileList.items.add(new File([imagem], imagem.name));
+            inputImg.files = fileList.files;
+        }
+    }
 }
 
 
