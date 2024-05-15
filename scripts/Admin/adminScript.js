@@ -20,7 +20,7 @@ const adminHome = () => {
             <a class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="gerenciarTipos()">Gerenciar Tipos</a>
             <a class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="gerenciarOrgao()">Gerenciar Órgãos Públicos</a>
             <a class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="visualizarDenuncias()">Visualizar Denúncias</a>
-            <a class="list-group-item list-group-item-action" disabled" aria-disabled="true" href="#visualizarDenuncias">Cadastrar administrador</a>
+            <a class="list-group-item list-group-item-action disabled" aria-disabled="true" href="#visualizarDenuncias">Cadastrar administrador</a>
         </div>
         </div>
   </div>
