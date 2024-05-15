@@ -3,12 +3,6 @@ const denunciaForm = (data) => {
     denunciaSection.innerHTML = '';
 
     const container = criarElemento('div', { class: 'container' });
-    let headBanner = criarElemento('div', { class: 'row text-center'});
-    headBanner.innerHTML = `
-        <h1 class="display-3 fw-bold text-capitalize" style="color: white;">Denúncia</h1>
-        <div class="heading-line"></div>
-        `;
-    container.appendChild(headBanner);
 
     const painelPrincipal = criarElemento('div', { class: 'row text-white '});
     const painelEsq = criarElemento('div', { class: 'col-12 col-lg-6 gradient shadow p-3' })
