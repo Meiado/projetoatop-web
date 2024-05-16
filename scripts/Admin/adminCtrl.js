@@ -16,3 +16,34 @@ const validaSessaoAdmin = async () => {
         }
     });
 } 
+
+
+const registerAdmin = async () => {
+    const email = document.querySelector('#emailCadastro').value;
+    const senha = document.querySelector('#senhaCadastro').value;
+    const cpf = document.querySelector('#cpfCadastro').value;
+    let usuario = {
+      email: email,
+      senha: senha,
+      cpf: cpf,
+      nivel: 1,
+    };
+    await fetch('http://localhost:8080/api/admin/register', {
+        method: 'POST',
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(usuario),
+    }).then(response => {
+        if(response.ok) {
+            alert('Administrador registrado');
+            registerAdminView();
+        }
+        else if(response.status === 400) {
+            alert('Este email já está cadastrado!');
+            registerAdminView();
+        }
+    }).catch(err => console.error('Ocorrreu um erro, ', err));
+
+}
