@@ -21,7 +21,25 @@ const validaSessaoAdmin = async () => {
 const registerAdmin = async () => {
     const email = document.querySelector('#emailCadastro').value;
     const senha = document.querySelector('#senhaCadastro').value;
+    const senhaRepetida = document.querySelector('#senhaRepetida').value
     const cpf = document.querySelector('#cpfCadastro').value;
+    const mensagem = document.querySelector('#mensagem');
+    if (!email) {
+        mensagem.innerHTML = 'Insira um email';
+        return;
+    }
+    if (!cpf) {
+        mensagem.innerHTML = 'Informe um CPF';
+        return;
+    }
+    if (senha.trim() === '' || senha.length < 6) {
+        mensagem.innerHTML = 'Senha precisa ser maior';
+        return;
+    }
+    if (senha !== senhaRepetida) {
+        mensagem.innerHTML = 'As senhas não coincidem';
+        return;
+    }
     let usuario = {
       email: email,
       senha: senha,
@@ -35,11 +53,11 @@ const registerAdmin = async () => {
         },
         body: JSON.stringify(usuario),
     }).then(response => {
-        if(response.ok) {
+        if (response.ok) {
             alert('Administrador registrado');
             registerAdminView();
         }
-        else if(response.status === 400) {
+        else if (response.status === 400) {
             alert('Este email já está cadastrado!');
             registerAdminView();
         }
