@@ -26,7 +26,6 @@ const registerAdmin = async () => {
       email: email,
       senha: senha,
       cpf: cpf,
-      nivel: 1,
     };
     await fetch('http://localhost:8080/api/admin/register', {
         method: 'POST',
