@@ -46,6 +46,12 @@ const loadDenuncias = async () => {
     tableBody.innerHTML = denuncias;
     table.appendChild(tableHead);
     table.appendChild(tableBody);
+    const divButton = criarElemento('div', {class: 'container', style: 'display: flex; justify-content: center; gap: 3px;'});
+    const voltar = criarBotao('button', 'Voltar', '#', 'btn btn-primary rounded-pill pt-2 pb-2');
+    voltar.addEventListener('click', () => window.location.reload());
+    voltar.setAttribute('style', 'margin-top: 5px');
+    divButton.appendChild(voltar);
+    document.querySelector('#buttonSection').appendChild(divButton);
     await loadImagem();
     await loadFeedback();
 }
