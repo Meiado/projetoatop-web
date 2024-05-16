@@ -15,17 +15,18 @@ const register = async () => {
         },
         body: JSON.stringify(usuario),
       })
-      const token = await loginResponse.text();
-      console.log(token);
-  
-      localStorage.setItem('token', token);
-
-      const accessResponse = await fetch('http://localhost:8080/access?token=' + token, {
-        method: 'GET',
-      })
-      const access = parseInt(await accessResponse.text());
-      localStorage.setItem('access', access); 
-      redirect(access);
+      if(loginResponse.ok) {
+        const token = await loginResponse.text();
+        localStorage.setItem('token', token);
+        const accessResponse = await fetch('http://localhost:8080/access?token=' + token, {
+          method: 'GET',
+        })
+        const access = parseInt(await accessResponse.text());
+        localStorage.setItem('access', access); 
+        redirect(access);
+      }
+      else
+        alert('Email já cadastrado');
 
     } catch (err) {
       console.error(err);
