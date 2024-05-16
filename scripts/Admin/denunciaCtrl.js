@@ -29,7 +29,7 @@ const loadDenuncias = async () => {
 
     });
     listaDenuncias = await response.json();
-    let denuncias = "";
+    let denuncias = '';
     for (denuncia of listaDenuncias) {  
         denuncias += `
                 <tr>
@@ -70,7 +70,7 @@ const loadFeedback = async () => {
         const feedback = listaFeedbacks.find(feed => feed.denuncia.id === denuncia.id);
         if(feedback) {
             const idTag = 'feedback'+denuncia.id;
-            document.querySelector('#'+idTag).innerHTML = denuncia.feedback.texto;
+            document.querySelector('#'+idTag).innerHTML = feedback.texto;
         }
         const idButton = 'button'+denuncia.id;
         document.querySelector('#'+idButton).addEventListener('click', () => montaFeedbackForm(denuncia.id));
@@ -114,7 +114,7 @@ const montaFeedbackForm = async (id) => {
     div.appendChild(input);
     const button = criarBotao('submit', 'Enviar','#', 'btn btn-primary rounded-pill pt-1 pb-1');
     button.setAttribute('style', 'margin-left: 5px');
-    let feedback = listaFeedbacks.find(feed => feed.denuncia.id === id);
+    const feedback = listaFeedbacks.find(feed => feed.denuncia.id === id);
     if (feedback) {
         input.value = feedback.texto;
     }
