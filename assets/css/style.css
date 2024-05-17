@@ -5012,7 +5012,9 @@ textarea.form-control-lg {
   background-color: #5c1790;
   border-color: #5c1790;
 }
-
+.list-group-item-action:hover {
+  opacity: 1 !important;
+}
 .list-group-item-secondary {
   color: #7d1488;
   background-color: #f6d3f9;

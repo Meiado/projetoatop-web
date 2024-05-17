@@ -4,9 +4,9 @@ window.onload = async () => {
 
 const adminHome = () => {
     const home = document.querySelector('#home');
-    home.innerHTML = `<div class="row align-items-center text-white">
+    home.innerHTML = `<div class="row align-items-center text-white" >
         <!-- START THE CONTENT FOR THE INTRO  -->
-        <div class="col-md-6 intros text-start">
+        <div  class="col-md-4 intros text-start">
         <h1 class="display-2">
             <span class="display-2--intro">Bem-vindo, administrador.</span>
             <span class="display-2--description lh-base">
@@ -14,14 +14,17 @@ const adminHome = () => {
             </span>
         </h1>
         </div>
+        <div class="col-md-4">
+        <img src="../images/services/service-2.png" style="margin-left: 5rem; max-width: 100%; ">
+        </div>
         <!-- START THE CONTENT FOR THE VIDEO -->
-        <div id="funcionalidades" class="col-md-6 intros text-end">
+        <div id="funcionalidades"  class="col-md-4 intros text-end">
         <div class="list-group" style="gap: 3px; text-align: center;">
-            <a class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="gerenciarTipos()">Gerenciar Tipos</a>
-            <a class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="gerenciarOrgao()">Gerenciar Órgãos Públicos</a>
-            <a class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="visualizarDenuncias()">Visualizar Denúncias</a>
-            <a class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="registrarAdmin()">Cadastrar administrador</a>
-            <a class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="emitirRelatorio()">Relação de denúncias</a>
+            <button class="list-group-item list-group-item-action" style="cursor: pointer; " onclick="gerenciarTipos()">Gerenciar Tipos</button>
+            <button class="list-group-item list-group-item-action" style="cursor: pointer; " onclick="gerenciarOrgao()">Gerenciar Órgãos Públicos</button>
+            <button class="list-group-item list-group-item-action" style="cursor: pointer; " onclick="visualizarDenuncias()">Visualizar Denúncias</button>
+            <button class="list-group-item list-group-item-action" style="cursor: pointer; " onclick="registrarAdmin()">Cadastrar administrador</button>
+            <button class="list-group-item list-group-item-action" style="cursor: pointer; " onclick="emitirRelatorio()">Relação de denúncias</button>
         </div>
         </div>
   </div>

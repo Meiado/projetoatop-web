@@ -20,6 +20,7 @@ const denunciaForm = (data) => {
         <li>Inserir valores válidos</li>
         <li>Confirmar envio</li>
         </ul>
+        <img src="../images/services/service-1.png" style="width: 60%; margin-left: 40%;">
         `;
 
     painelEsq.appendChild(painelEsqInfo);
@@ -121,16 +122,19 @@ const cidadaoHome = () => {
     const home = document.querySelector('#interact');
     home.innerHTML = `<div class="row align-items-center text-white">
         <!-- START THE CONTENT FOR THE INTRO  -->
-        <div class="col-md-6 intros text-start">
+        <div class="col-md-5 intros text-start" style="position: relative;">
         <h1 class="display-2">
             <span class="display-2--intro">Bem-vindo, cidadão.</span>
             <span class="display-2--description lh-base">
-            Ao lado estão as funcionalidades disponíveis. 
+            Ao lado estão os serviços disponíveis. 
             </span>
         </h1>
         </div>
+        <div class="col-md-4">
+        <img src="../images/services/service-3.png" style="max-width: 100%;">
+        </div>
         <!-- START THE CONTENT FOR THE VIDEO -->
-        <div id="funcionalidades" class="col-md-6 intros text-end">
+        <div id="funcionalidades"  class="col-md-3 intros text-end">
         <div class="list-group" style="gap: 3px; text-align: center;">
             <a class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="denunciaForm()">Enviar denúncia</a>
             <a class="list-group-item list-group-item-action disabled" aria-disabled="true">Visualizar minhas denúncias</a>
