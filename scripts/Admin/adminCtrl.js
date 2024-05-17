@@ -17,6 +17,20 @@ const validaSessaoAdmin = async () => {
     });
 } 
 
+const emitirRelatorio = () => {
+    fetch('http://localhost:8080/api/admin/report', {  
+        method: 'GET',
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        }
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        window.open(url, '_blank');
+    });
+}
+
 
 const registerAdmin = async () => {
     const email = document.querySelector('#emailCadastro').value;

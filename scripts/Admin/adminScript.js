@@ -21,6 +21,7 @@ const adminHome = () => {
             <a class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="gerenciarOrgao()">Gerenciar Órgãos Públicos</a>
             <a class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="visualizarDenuncias()">Visualizar Denúncias</a>
             <a class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="registrarAdmin()">Cadastrar administrador</a>
+            <a class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="emitirRelatorio()">Emitir relatório de denúncias</a>
         </div>
         </div>
   </div>
