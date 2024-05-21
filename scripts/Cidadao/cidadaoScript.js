@@ -124,7 +124,7 @@ const cidadaoHome = () => {
         <!-- START THE CONTENT FOR THE INTRO  -->
         <div class="col-md-5 intros text-start" style="position: relative;">
         <h1 class="display-2">
-            <span class="display-2--intro">Bem-vindo, cidadão.</span>
+            <span class="display-2--intro">Bem-vindo, cidadão</span>
             <span class="display-2--description lh-base">
             Ao lado estão os serviços disponíveis. 
             </span>
@@ -137,11 +137,28 @@ const cidadaoHome = () => {
         <div id="funcionalidades"  class="col-md-3 intros text-end">
         <div class="list-group" style="gap: 3px; text-align: center;">
             <a class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="denunciaForm()">Enviar denúncia</a>
-            <a class="list-group-item list-group-item-action disabled" aria-disabled="true">Visualizar minhas denúncias</a>
+            <a class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="visualizarDenuncias()">Visualizar minhas denúncias</a>
         </div>
         </div>
   </div>
   `;
+}
+
+const preparaTabela = () => {
+    const home = document.querySelector('#interact');
+    home.innerHTML = `    
+        <table class="table table-secondary table-hover" id="table"></table>
+        <section id="formSection"></section>
+        <div id="mensagemDiv" style="display:flex; justify-content:center; margin: 10px;">
+            <p id="mensagem" style="color: white;"></p>
+        </div>
+        <section id="buttonSection"></section>
+    `;
+}
+
+const visualizarDenuncias = async () => {
+    preparaTabela();
+    await loadDenuncias();
 }
 
 window.onload = async () => validaSessaoCidadao();

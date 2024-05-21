@@ -8,7 +8,7 @@ const adminHome = () => {
         <!-- START THE CONTENT FOR THE INTRO  -->
         <div  class="col-md-4 intros text-start">
         <h1 class="display-2">
-            <span class="display-2--intro">Bem-vindo, administrador.</span>
+            <span class="display-2--intro">Bem-vindo, administrador</span>
             <span class="display-2--description lh-base">
             Ao lado estão as funcionalidades disponíveis. 
             </span>
