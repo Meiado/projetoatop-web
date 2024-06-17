@@ -1,6 +1,6 @@
 
 const validaSessaoAdmin = async () => {
-    await fetch('http://localhost:8080/access/session', {
+    await fetch('http://localhost:8080/session', {
         method: 'GET',
         headers: {
             'Authorization': localStorage.getItem('token'),
@@ -17,19 +17,19 @@ const validaSessaoAdmin = async () => {
     });
 } 
 
-const emitirRelatorio = () => {
-    fetch('http://localhost:8080/api/admin/report', {  
-        method: 'GET',
-        headers: {
-            'Authorization': localStorage.getItem('token'),
-        }
-    })
-    .then(response => response.blob())
-    .then(blob => {
-        const url = window.URL.createObjectURL(blob);
-        window.open(url, '_blank');
-    });
-}
+// const emitirRelatorio = () => {
+//     fetch('http://localhost:8080/api/admin/report', {  
+//         method: 'GET',
+//         headers: {
+//             'Authorization': localStorage.getItem('token'),
+//         }
+//     })
+//     .then(response => response.blob())
+//     .then(blob => {
+//         const url = window.URL.createObjectURL(blob);
+//         window.open(url, '_blank');
+//     });
+// }
 
 
 const registerAdmin = async () => {

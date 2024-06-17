@@ -21,7 +21,7 @@ const loadDenuncias = async () => {
     const tableBody = document.createElement('tbody');
     tableBody.setAttribute('class', 'table-group-divider');
     tableBody.setAttribute('style', 'border-top-color: aliceblue;');
-    const response = await fetch('http://localhost:8080/api/admin/denuncia/all', {
+    const response = await fetch('http://localhost:8080/api/admin/denuncia', {
         method: 'GET',
         headers: {
             'Authorization': localStorage.getItem('token'),
@@ -37,8 +37,14 @@ const loadDenuncias = async () => {
                     <td>${denuncia.tipo.nome}</td>
                     <td>${denuncia.titulo}</td>
                     <td>${new Date(denuncia.data).toLocaleDateString('pt-BR')}</td>
-                    <td>${denuncia.urgencia}</td> 
-                    <td name="feedback" id="feedback${denuncia.id}">Feedback não fornecido</td>
+                    <td>${denuncia.urgencia}</td>  `
+        if(denuncia.feedback) {
+            listaFeedbacks.push(denuncia.feedback);
+            denuncias += `<td name="feedback" id="feedback${denuncia.id}">${denuncia.feedback.texto}</td>`;
+        }
+        else
+            denuncias +=`<td name="feedback" id="feedback${denuncia.id}">Feedback ainda não fornecido</td>`;
+        denuncias += `
                     <td><button id="button${denuncia.id}" type="button" class ="btn btn-primary rounded-pill pt-1 pb-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
                     <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001"/>
                   </svg></button></td>
@@ -54,22 +60,11 @@ const loadDenuncias = async () => {
     voltar.setAttribute('style', 'margin-top: 5px');
     divButton.appendChild(voltar);
     document.querySelector('#buttonSection').appendChild(divButton);
-    await loadImagem();
-    await loadFeedback();
 }
 
-const loadFeedback = async () => {
-    listaFeedbacks = await fetch('http://localhost:8080/api/admin/denuncia/feedbacks', {
-        method: 'GET',
-        headers: {
-            'Authorization': localStorage.getItem('token'),
-        },
-    }).then(res => {
-        if(res.ok)
-            return res.json();
-    })
+const loadFeedback = () => {
     for (let denuncia of listaDenuncias){
-        const feedback = listaFeedbacks.find(feed => feed.denuncia.id === denuncia.id);
+        const feedback = listaFeedbacks.find(feed => feed.denunciaId === denuncia.id);
         if(feedback) {
             const idTag = 'feedback'+denuncia.id;
             document.querySelector('#'+idTag).innerHTML = feedback.texto;
@@ -81,13 +76,13 @@ const loadFeedback = async () => {
 
 const loadImagem = async () => {
     for (let item of listaDenuncias) {
-        const res = await fetch('http://localhost:8080/api/admin/denuncia/imagem?id='+item.id, {
+        const res = await fetch(`http://localhost:8080/api/admin/denuncia/${item.id}/imagem`, {
             method: 'GET',
             headers: {
                 'Authorization': localStorage.getItem('token'),
             },
         });
-        if(res.ok) {
+        if(res.status === 200) {
             const blob = await res.blob();
             const url = URL.createObjectURL(blob);
             const button = document.createElement('button');
@@ -99,8 +94,6 @@ const loadImagem = async () => {
             const tagId = 'imagem'+item.id;
             document.querySelector('#'+tagId).innerHTML = '';
             document.querySelector('#'+tagId).appendChild(button);
-        } else {
-            console.log('Imagem não encontrada');
         }
     }
 }
@@ -116,7 +109,7 @@ const montaFeedbackForm = async (id) => {
     div.appendChild(input);
     const button = criarBotao('submit', 'Enviar','#', 'btn btn-primary rounded-pill pt-1 pb-1');
     button.setAttribute('style', 'margin-left: 5px');
-    const feedback = listaFeedbacks.find(feed => feed.denuncia.id === id);
+    const feedback = listaFeedbacks.find(feed => feed.denunciaId === id);
     if (feedback) {
         input.value = feedback.texto;
     }
@@ -134,7 +127,7 @@ const enviaFeedback = async (id) => {
     if(texto.trim() !== "") {
         document.querySelector('#mensagem').textContent = '';
         const feedback = { texto: texto };
-        await fetch('http://localhost:8080/api/admin/denuncia/feedback?id='+id, {
+        await fetch(`http://localhost:8080/api/admin/denuncia/${id}/feedback`, {
             method: 'PATCH',
             headers: {
                 'Authorization': localStorage.getItem('token'),
@@ -153,7 +146,11 @@ const enviaFeedback = async (id) => {
 }
 
 const denunciaControl = async () => {
+    listaDenuncias = [];
+    listaFeedbacks = [];
     document.querySelector('#formSection').innerHTML='';
     document.querySelector('#buttonSection').innerHTML = '';
-    await loadDenuncias();
+    await loadDenuncias()
+    .then(async () => await loadImagem())
+    .then(() => loadFeedback());
 }

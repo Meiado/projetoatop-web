@@ -39,14 +39,19 @@ const loadDenuncias = async () => {
                     <td>${denuncia.tipo.nome}</td>
                     <td>${denuncia.urgencia}</td> 
                     <td>${denuncia.texto}</td>
-                    <td name="feedback" id="feedback${denuncia.id}">Feedback ainda não fornecido</td>
+                    `
+        if(denuncia.feedback)
+            denuncias += `<td name="feedback" id="feedback${denuncia.id}">${denuncia.feedback.texto}</td>`;
+        else
+            denuncias +=`<td name="feedback" id="feedback${denuncia.id}">Feedback ainda não fornecido</td>`;
+        denuncias += `
                     <td></td>
                     <td id="imagem${denuncia.id}">Sem imagem</td>
-                    <td><button class="btn btn-danger rounded-pill pb-1 pt-1" onclick="confirmarExclusao(${denuncia.id})"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                    <td><button class="btn btn-danger rounded-pill pb-1 pt-1" onclick="confirmarExclusao('${denuncia.id}')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
                     <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
                   </svg></button></td>
                 </tr>
-                `                
+                `            
     }
     tableBody.innerHTML = denuncias;
     table.appendChild(tableHead);
@@ -58,39 +63,17 @@ const loadDenuncias = async () => {
     divButton.appendChild(voltar);
     document.querySelector('#buttonSection').appendChild(divButton);
     await loadImagem();
-    await loadFeedback();
-}
-
-const loadFeedback = async () => {
-    listaFeedbacks = await fetch('http://localhost:8080/api/admin/denuncia/feedbacks', {
-        method: 'GET',
-        headers: {
-            'Authorization': localStorage.getItem('token'),
-        },
-    }).then(res => {
-        if(res.ok)
-            return res.json();
-    })
-    for (let denuncia of listaDenuncias){
-        const feedback = listaFeedbacks.find(feed => feed.denuncia.id === denuncia.id);
-        if(feedback) {
-            const idTag = 'feedback'+denuncia.id;
-            document.querySelector('#'+idTag).innerHTML = feedback.texto;
-        }
-        const idButton = 'button'+denuncia.id;
-        document.querySelector('#'+idButton).addEventListener('click', () => montaFeedbackForm(denuncia.id));
-    }
 }
 
 const loadImagem = async () => {
     for (let item of listaDenuncias) {
-        const res = await fetch('http://localhost:8080/api/cidadao/denuncia/imagem?id='+item.id, {
+        const res = await fetch(`http://localhost:8080/api/cidadao/denuncia/${item.id}/imagem`, {
             method: 'GET',
             headers: {
                 'Authorization': localStorage.getItem('token'),
             },
         });
-        if(res.ok) {
+        if(res.status === 200) {
             const blob = await res.blob();
             const url = URL.createObjectURL(blob);
             const button = document.createElement('button');
@@ -113,7 +96,7 @@ const confirmarExclusao = async (id) => {
 }
 
 const excluirDenuncia = async (id) => {
-    const res = await fetch('http://localhost:8080/api/cidadao/denuncia?id='+id, {
+    const res = await fetch('http://localhost:8080/api/cidadao/denuncia/'+id, {
             method: 'DELETE',
             headers: {
                 'Authorization': localStorage.getItem('token'),

@@ -16,7 +16,7 @@ const loadOrgaos = async () => {
     const tableBody = document.createElement('tbody');
     tableBody.setAttribute('class', 'table-group-divider');
     tableBody.setAttribute('style', 'border-top-color: aliceblue;');
-    const response = await fetch('http://localhost:8080/api/admin/orgao/all', {
+    const response = await fetch('http://localhost:8080/api/admin/orgao', {
         method: 'GET',
         headers: {
             'Authorization': localStorage.getItem('token'),
@@ -57,7 +57,7 @@ const loadOrgaos = async () => {
 }
 
 const deleteOrgao = async (id) => {
-    await fetch('http://localhost:8080/api/admin/orgao?id='+id, {
+    await fetch('http://localhost:8080/api/admin/orgao/'+id, {
         method: 'DELETE',
         headers: {
             'Authorization': localStorage.getItem('token'),
@@ -100,7 +100,7 @@ const enviaOrgao = async (id) => {
         document.querySelector('#mensagem').textContent = '';
         const novoOrgao = { nome: nome };
         if(id) {
-            await fetch('http://localhost:8080/api/admin/orgao?id='+id, {
+            await fetch('http://localhost:8080/api/admin/orgao/'+id, {
                 method: 'PATCH',
                 headers: {
                     'Authorization': localStorage.getItem('token'),

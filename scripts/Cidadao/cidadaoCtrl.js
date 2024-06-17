@@ -98,7 +98,7 @@ const confirmaDenuncia = async (data) => {
 }
 
 const validaSessaoCidadao = async () => {
-    await fetch('http://localhost:8080/access/session', {
+    await fetch('http://localhost:8080/session', {
         method: 'GET',
         headers: {
             'Authorization': localStorage.getItem('token'),

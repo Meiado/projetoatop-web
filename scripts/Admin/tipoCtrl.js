@@ -16,7 +16,7 @@ const loadTipos = async () => {
     const tableBody = document.createElement('tbody');
     tableBody.setAttribute('class', 'table-group-divider');
     tableBody.setAttribute('style', 'border-top-color: aliceblue;');
-    const response = await fetch('http://localhost:8080/api/admin/tipo/all', {
+    const response = await fetch('http://localhost:8080/api/admin/tipo', {
         method: 'GET',
         headers: {
             'Authorization': localStorage.getItem('token'),
@@ -57,7 +57,7 @@ const loadTipos = async () => {
 }
 
 const deleteTipo = async (id) => {
-    await fetch('http://localhost:8080/api/admin/tipo?id='+id, {
+    await fetch('http://localhost:8080/api/admin/tipo/'+id, {
         method: 'DELETE',
         headers: {
             'Authorization': localStorage.getItem('token'),
@@ -100,7 +100,7 @@ const enviaTipo = async (id) => {
         document.querySelector('#mensagem').textContent = '';
         const novoTipo = { nome: nome };
         if(id) {
-            await fetch('http://localhost:8080/api/admin/tipo?id='+id, {
+            await fetch('http://localhost:8080/api/admin/tipo/'+id, {
                 method: 'PATCH',
                 headers: {
                     'Authorization': localStorage.getItem('token'),
