@@ -7,7 +7,7 @@ const loadDenuncias = async () => {
     const tableHead = document.createElement('thead');
     tableHead.innerHTML = `
         <tr>
-          <th scope="col">Denúncia</th>
+          <th scope="col">#</th>
           <th scope="col">Tipo</th>
           <th scope="col">Título</th>
           <th scope="col">Data</th>
@@ -21,7 +21,7 @@ const loadDenuncias = async () => {
     const tableBody = document.createElement('tbody');
     tableBody.setAttribute('class', 'table-group-divider');
     tableBody.setAttribute('style', 'border-top-color: aliceblue;');
-    const response = await fetch('http://localhost:8080/api/admin/denuncia', {
+    const response = await fetch('https://api-ativo-operante-nki2meb3eq-rj.a.run.app/api/admin/denuncia', {
         method: 'GET',
         headers: {
             'Authorization': localStorage.getItem('token'),
@@ -30,10 +30,11 @@ const loadDenuncias = async () => {
     });
     listaDenuncias = await response.json();
     let denuncias = '';
-    for (denuncia of listaDenuncias) {  
+    for (let i = 0; i < listaDenuncias.length; i++) {
+        denuncia = listaDenuncias[i];  
         denuncias += `
                 <tr>
-                    <td>${denuncia.id}</td>
+                    <td>${i+1}</td>
                     <td>${denuncia.tipo.nome}</td>
                     <td>${denuncia.titulo}</td>
                     <td>${new Date(denuncia.data).toLocaleDateString('pt-BR')}</td>
@@ -76,7 +77,7 @@ const loadFeedback = () => {
 
 const loadImagem = async () => {
     for (let item of listaDenuncias) {
-        const res = await fetch(`http://localhost:8080/api/admin/denuncia/${item.id}/imagem`, {
+        const res = await fetch(`https://api-ativo-operante-nki2meb3eq-rj.a.run.app/api/admin/denuncia/${item.id}/imagem`, {
             method: 'GET',
             headers: {
                 'Authorization': localStorage.getItem('token'),
@@ -127,7 +128,7 @@ const enviaFeedback = async (id) => {
     if(texto.trim() !== "") {
         document.querySelector('#mensagem').textContent = '';
         const feedback = { texto: texto };
-        await fetch(`http://localhost:8080/api/admin/denuncia/${id}/feedback`, {
+        await fetch(`https://api-ativo-operante-nki2meb3eq-rj.a.run.app/api/admin/denuncia/${id}/feedback`, {
             method: 'PATCH',
             headers: {
                 'Authorization': localStorage.getItem('token'),

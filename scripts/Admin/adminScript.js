@@ -20,11 +20,11 @@ const adminHome = () => {
         <!-- START THE CONTENT FOR THE VIDEO -->
         <div id="funcionalidades"  class="col-md-4 intros text-end">
         <div class="list-group" style="gap: 3px; text-align: center;">
-            <button class="list-group-item list-group-item-action" style="cursor: pointer; " onclick="gerenciarTipos()">Gerenciar Tipos</button>
-            <button class="list-group-item list-group-item-action" style="cursor: pointer; " onclick="gerenciarOrgao()">Gerenciar Órgãos Públicos</button>
-            <button class="list-group-item list-group-item-action" style="cursor: pointer; " onclick="visualizarDenuncias()">Visualizar Denúncias</button>
-            <button class="list-group-item list-group-item-action" style="cursor: pointer; " onclick="registrarAdmin()">Cadastrar administrador</button>
-            <button class="list-group-item list-group-item-action" style="cursor: pointer; " onclick="emitirRelatorio()">Relação de denúncias</button>
+            <button class="btn list-group-item list-group-item-action" style="cursor: pointer; " onclick="gerenciarTipos()">Gerenciar Tipos</button>
+            <button class="btn list-group-item list-group-item-action" style="cursor: pointer; " onclick="gerenciarOrgao()">Gerenciar Órgãos Públicos</button>
+            <button class="btn list-group-item list-group-item-action" style="cursor: pointer; " onclick="visualizarDenuncias()">Visualizar Denúncias</button>
+            <button class="btn list-group-item list-group-item-action" style="cursor: pointer; " onclick="registrarAdmin()">Cadastrar administrador</button>
+            <button class="btn btn-light list-group-item list-group-item-action disabled" aria-disabled="true" onclick="emitirRelatorio()">Relação de denúncias</button>
         </div>
         </div>
   </div>
