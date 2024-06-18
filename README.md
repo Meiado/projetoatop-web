@@ -8,7 +8,7 @@ Trata-se de um portal de envio de denúncias, que podem acompanhar imagens anexa
 
 ## Instalação
 
-Como é uma aplicação web, não é necessário instalar nada localmente. Basta acessar [Projeto ATop](https://meiado.github.io/projetoatop-web/index.html) para começar a usar.
+Como é uma aplicação web, não é necessário instalar nada localmente. Basta acessar [Ativo e Operante](https://meiado.github.io/projetoatop-web/index.html) para começar a usar.
 
 
 ## Uso
@@ -24,7 +24,7 @@ O Projeto Ativo Operante foi desenvolvido utilizando as seguintes tecnologias:
 - **JPA (Java Persistence API)**: Para o mapeamento objeto-relacional.
 - **MongoDB Atlas**: Como banco de dados NoSQL hospedado em nuvem para armazenamento de dados.
 - **Google Cloud**: Para hospedagem da aplicação, utilizando o serviço Cloud Run para execução de Containers Docker.
-- Repositório: [Projeto ATop](https://github.com/HumbertoStuani/projetoatop-api)
+- Repositório: [Projeto ATOP API](https://github.com/HumbertoStuani/projetoatop-api)
 
 # Front End
 - **HTML/CSS/JavaScript**: Para a construção do front-end da aplicação.
