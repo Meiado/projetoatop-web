@@ -22,7 +22,7 @@ const loadDenuncias = async () => {
     const tableBody = document.createElement('tbody');
     tableBody.setAttribute('class', 'table-group-divider');
     tableBody.setAttribute('style', 'border-top-color: aliceblue;');
-    const response = await fetch('http://localhost:8080/api/cidadao/denuncia', {
+    const response = await fetch('https://api-ativo-operante-nki2meb3eq-rj.a.run.app/api/cidadao/denuncia', {
         method: 'GET',
         headers: {
             'Authorization': localStorage.getItem('token'),
@@ -67,7 +67,7 @@ const loadDenuncias = async () => {
 
 const loadImagem = async () => {
     for (let item of listaDenuncias) {
-        const res = await fetch(`http://localhost:8080/api/cidadao/denuncia/${item.id}/imagem`, {
+        const res = await fetch(`https://api-ativo-operante-nki2meb3eq-rj.a.run.app/api/cidadao/denuncia/${item.id}/imagem`, {
             method: 'GET',
             headers: {
                 'Authorization': localStorage.getItem('token'),
@@ -96,7 +96,7 @@ const confirmarExclusao = async (id) => {
 }
 
 const excluirDenuncia = async (id) => {
-    const res = await fetch('http://localhost:8080/api/cidadao/denuncia/'+id, {
+    const res = await fetch('https://api-ativo-operante-nki2meb3eq-rj.a.run.app/api/cidadao/denuncia/'+id, {
             method: 'DELETE',
             headers: {
                 'Authorization': localStorage.getItem('token'),

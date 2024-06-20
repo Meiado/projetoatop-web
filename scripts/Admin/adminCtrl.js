@@ -1,6 +1,6 @@
 
 const validaSessaoAdmin = async () => {
-    await fetch('http://localhost:8080/session', {
+    await fetch('https://api-ativo-operante-nki2meb3eq-rj.a.run.app/session', {
         method: 'GET',
         headers: {
             'Authorization': localStorage.getItem('token'),
@@ -18,7 +18,7 @@ const validaSessaoAdmin = async () => {
 } 
 
 // const emitirRelatorio = () => {
-//     fetch('http://localhost:8080/api/admin/report', {  
+//     fetch('https://api-ativo-operante-nki2meb3eq-rj.a.run.app/api/admin/report', {  
 //         method: 'GET',
 //         headers: {
 //             'Authorization': localStorage.getItem('token'),
@@ -59,7 +59,7 @@ const registerAdmin = async () => {
       senha: senha,
       cpf: cpf,
     };
-    await fetch('http://localhost:8080/api/admin/register', {
+    await fetch('https://api-ativo-operante-nki2meb3eq-rj.a.run.app/api/admin/register', {
         method: 'POST',
         headers: {
             'Authorization': localStorage.getItem('token'),

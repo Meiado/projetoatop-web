@@ -26,7 +26,7 @@ const register = async () => {
     cpf: cpf
   };
   try {
-    const loginResponse = await fetch('http://localhost:8080/register', {
+    const loginResponse = await fetch('https://api-ativo-operante-nki2meb3eq-rj.a.run.app/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const register = async () => {
     if(loginResponse.ok) {
       const token = await loginResponse.text();
       localStorage.setItem('token', token);
-      const accessResponse = await fetch('http://localhost:8080/?token=' + token, {
+      const accessResponse = await fetch('https://api-ativo-operante-nki2meb3eq-rj.a.run.app/path?token=' + token, {
         method: 'GET',
       })
       const access = parseInt(await accessResponse.text());
@@ -100,7 +100,7 @@ const login = async () => {
     }
     let usuario = { email: email, senha: senha };
     try {
-        const res = await fetch('http://localhost:8080/login', {
+        const res = await fetch('https://api-ativo-operante-nki2meb3eq-rj.a.run.app/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ const login = async () => {
         const token = await res.text();
         localStorage.setItem('token', token);
 
-        const accessResponse = await fetch('http://localhost:8080/?token=' + token, {
+        const accessResponse = await fetch('https://api-ativo-operante-nki2meb3eq-rj.a.run.app/path?token=' + token, {
         method: 'GET',
         })
         const access = parseInt(await accessResponse.text());
