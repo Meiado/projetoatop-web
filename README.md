@@ -14,7 +14,7 @@ Como é uma aplicação web, não é necessário instalar nada localmente. Basta
 ## Uso
 
 A aplicação é intuitiva e fácil de usar. Após acessar o link, você pode criar uma conta ou entrar com suas credenciais existentes para registrar denúncias e acompanhar seus feedbacks. <br>
-### NÃO UTILIZE SUAS INFORMAÇÕES REAIS PARA CADASTRO!<br>
+### NÃO UTILIZE INFORMAÇÕES REAIS PARA CADASTRO!<br>
 As opções "Visão Cidadão" e "Visão Admin" não interagem diretamente com o servidor da aplicação, elas servem somente para mostrar como são as interfaces visuais de cada nível de acesso e simular suas funcionalidades disponíveis através de variáveis locais, sem a necessidade de cadastro e autenticação. <br>
 Para se cadastrar recomendamos utilizar informações geradas através do [4Devs](https://www.4devs.com.br/gerador_de_pessoas)
 
