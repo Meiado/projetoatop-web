@@ -28,7 +28,7 @@ O Projeto Ativo Operante foi desenvolvido utilizando as seguintes tecnologias:
 - **Java Spring Boot**: Para a construção da API RESTful.
 - **JPA (Java Persistence API)**: Para o mapeamento objeto-relacional.
 - **MongoDB Atlas**: Como banco de dados NoSQL hospedado em nuvem para armazenamento de dados.
-- **Google Cloud**: Para hospedagem da aplicação, utilizando o serviço Cloud Run para execução de Containers Docker.
+- **Google Cloud**: Para hospedagem da aplicação, utilizando o serviço Cloud Run para execução de Containers Docker. #### SERVIDOR DESLIGADO
 - Repositório: [Projeto ATOP API](https://github.com/HumbertoStuani/projetoatop-api)
 
 ### Front End
