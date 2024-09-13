@@ -7,13 +7,13 @@ Projeto Ativo Operante é uma aplicação web desenvolvida com o objetivo de apr
 Trata-se de um portal de envio de denúncias, que podem acompanhar imagens anexadas para avaliação e acompanhar o feedback da denúncia. Administradores visualizam as denúncias recebidas e adicionam a elas o feedback, além de configurar o sistema com os tipos de problema e órgãos responsáveis disponíveis.
 
 ## Instalação
-#### SERVIDOR DESLIGADO
 Como é uma aplicação web, não é necessário instalar nada localmente. Basta acessar [Ativo e Operante](https://meiado.github.io/projetoatop-web/index.html) para começar a usar. 
 
 
 ## Uso
 
 # SERVIDOR DESLIGADO
+A API estava hospedada em Cloud usando créditos e em razão do custo de manter ela no ar após o vencimento dos créditos decidimos desligar, porém ainda é possível entender o funcionamento do sistema com as visões de visitante adicionadas, que simulam o comportamento exato do sistema em memória
 
 
 ## Tecnologias
